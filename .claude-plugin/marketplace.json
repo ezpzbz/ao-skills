@@ -1,0 +1,17 @@
+{
+  "name": "ao-skills",
+  "description": "Skills for Agent Orchestrator (AO) users",
+  "owner": {
+    "name": "Pezh Zarabadi"
+  },
+  "plugins": [
+    {
+      "name": "ao-plan",
+      "description": "Write implementation plans an Agent Orchestrator (AO) orchestrator can run, with a model and reasoning effort chosen per step.",
+      "author": {
+        "name": "Pezh Zarabadi"
+      },
+      "source": "./"
+    }
+  ]
+}

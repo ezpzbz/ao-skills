@@ -1,0 +1,10 @@
+{
+  "name": "ao-plan",
+  "version": "0.1.0",
+  "description": "Write implementation plans an Agent Orchestrator (AO) orchestrator can run, with a model and reasoning effort chosen per step.",
+  "author": {
+    "name": "Pezh Zarabadi"
+  },
+  "license": "MIT",
+  "keywords": ["agent-orchestrator", "ao", "planning", "skills"]
+}
