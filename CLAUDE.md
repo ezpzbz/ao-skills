@@ -21,6 +21,12 @@ A Claude Code plugin (also usable as a Codex skill) containing one Markdown skil
   - Review-round behavior: `plan-template.md` and the README "Review rounds" section.
 - `examples/tasklist` is a deliberately small Python CLI whose plan exercises all three tiers; it contains an intentional concurrency bug for the deep-tier step. Do not fix it outside that plan.
 
+## Releases
+
+- Installed plugins update only when `version` in `.claude-plugin/plugin.json` changes. Bump it (semver) in the same PR as any change under `skills/`; README, example, and CI changes need no bump.
+- After merging a bump, tag and release: `git tag vX.Y.Z && git push origin vX.Y.Z && gh release create vX.Y.Z --generate-notes`.
+- CI (`.github/workflows/ci.yml`) runs the plugin validation and example tests on PRs and pushes to `main`.
+
 ## Conventions
 
 - Never invent model IDs in tier tables or plans; use the values from `references/tiers.md` or the user's `## AO worker tiers` override table.

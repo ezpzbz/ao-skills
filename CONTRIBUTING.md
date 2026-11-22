@@ -11,7 +11,8 @@ Thanks for helping. This repo is small on purpose: Markdown skills, no build ste
 
 ## Before opening a PR
 
-- Run `claude plugin validate .` if you have Claude Code.
+- Run `claude plugin validate .` if you have Claude Code. CI runs it and the example tests on every PR.
+- If you change anything under `skills/`, bump `version` in `.claude-plugin/plugin.json`. Installed plugins only update when it changes.
 - If you change `references/plan-template.md`, update the example plan in `examples/tasklist/docs/plans/` to match.
 - Describe how you tested it: which agent, which model, and what the orchestrator did with the plan.
 
