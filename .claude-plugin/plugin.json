@@ -1,10 +1,20 @@
 {
   "name": "ao-plan",
   "version": "0.1.0",
-  "description": "Write implementation plans an Agent Orchestrator (AO) orchestrator can run, with a model and reasoning effort chosen per step.",
+  "description": "Plan work for Orchestrator.inc (ao) with a model and reasoning effort per step, plus tiered review rounds that fix defects now and file the rest as issues.",
   "author": {
     "name": "Pezh Zarabadi"
   },
   "license": "MIT",
-  "keywords": ["agent-orchestrator", "ao", "planning", "skills"]
+  "keywords": [
+    "orchestrator-inc",
+    "ao",
+    "agent-orchestration",
+    "planning",
+    "code-review",
+    "model-routing",
+    "skills"
+  ],
+  "homepage": "https://github.com/ezpzbz/ao-skills",
+  "repository": "https://github.com/ezpzbz/ao-skills"
 }

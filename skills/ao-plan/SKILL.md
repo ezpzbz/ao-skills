@@ -1,6 +1,6 @@
 ---
 name: ao-plan
-description: Write an implementation plan that an Agent Orchestrator (AO) orchestrator can run, with one worker per step, a model and reasoning effort chosen per step, and tiered review rounds that fix defects now and track suggestions in a follow-up issue. Use when planning a feature, fix, or new project that AO workers will implement, or when the user mentions AO, the orchestrator, worker tiers, or wants a plan "for the orchestrator".
+description: Write an implementation plan that an Orchestrator.inc (`ao`) orchestrator can run, with one worker per step, a model and reasoning effort chosen per step, and tiered review rounds that fix defects now and track suggestions in a follow-up issue. Use when planning a feature, fix, or new project that AO workers will implement, or when the user mentions Orchestrator.inc, AO, `ao spawn`, the orchestrator, worker tiers, or wants a plan "for the orchestrator".
 ---
 
 # AO tiered plans
