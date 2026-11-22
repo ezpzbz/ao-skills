@@ -1,6 +1,6 @@
 ---
 name: ao-plan
-description: Write an implementation plan that an Agent Orchestrator (AO) orchestrator can run, with one worker per step and a model and reasoning effort chosen per step. Use when planning a feature, fix, or new project that AO workers will implement, or when the user mentions AO, the orchestrator, worker tiers, or wants a plan "for the orchestrator".
+description: Write an implementation plan that an Agent Orchestrator (AO) orchestrator can run, with one worker per step, a model and reasoning effort chosen per step, and tiered review rounds that fix defects now and track suggestions in a follow-up issue. Use when planning a feature, fix, or new project that AO workers will implement, or when the user mentions AO, the orchestrator, worker tiers, or wants a plan "for the orchestrator".
 ---
 
 # AO tiered plans
@@ -11,6 +11,7 @@ Produce a plan file that an AO orchestrator can execute without extra instructio
 
 - New or existing project? For an existing one, read `CLAUDE.md` / `AGENTS.md`, `README`, and the code the change touches. Find the test command.
 - Plan as you normally would (ask what you need, agree on the approach). This skill only shapes the output.
+- If another planning skill is active (for example superpowers `writing-plans`), let it write the steps and their detail, then add this skill's sections and per-step fields to that same plan. Produce one plan file, not two.
 
 ## 2. Load the tiers
 
@@ -19,7 +20,7 @@ Look for an `## AO worker tiers` table in the user's or project's `CLAUDE.md` / 
 ## 3. Split into steps
 
 - One step = one worker = one pull request. A step should be reviewable on its own and leave tests passing.
-- Give each step: goal, files, depends-on (step numbers or `none`), risk with a one-line reason, tier, and `Worker:` line.
+- Give each step: goal, files, depends-on (step numbers or `none`), risk with a one-line reason, tier, `Worker:` line, and `Review:` line.
 - Steps that touch the same files depend on each other. Everything else can run in parallel; say so.
 
 ## 4. Choose a tier per step
@@ -31,6 +32,16 @@ Choose by the riskiest thing in the step:
 - **deep**: concurrency, data loss or corruption, migrations of stored data, security or auth, bugs with unclear root cause, or changes that cut across many modules.
 
 If unsure between two, choose the higher one.
+
+The step's tier also sets its review rounds. Each entry in the `Review:` line is the reviewer tier for one round:
+
+| Step tier | Review |
+|-----------|--------|
+| light | `standard` |
+| standard | `standard → deep` |
+| deep | `standard → deep → deep` |
+
+Add or drop a round when a step's risk calls for it, and say why in its risk line.
 
 ## 5. Write and save the plan
 

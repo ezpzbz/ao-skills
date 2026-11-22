@@ -11,9 +11,20 @@ Each plan step is one worker and one pull request, and names the exact `ao spawn
 - Risk: high. Concurrency and data-loss bugs.
 - Tier: deep
 - Worker: `--agent claude-code --model claude-opus-5-5 --effort high`
+- Review: `standard → deep → deep`
 ```
 
-The plan also carries a `How to run this plan` section, so the orchestrator needs no extra project setup.
+The plan also carries a `How to run this plan` section, so the orchestrator needs no extra project rules.
+
+## Review rounds
+
+Each step's `Review:` line lists review rounds, one reviewer tier per round. For each round the orchestrator posts the reviewer's agent, model and effort as a PR comment and runs `ao review trigger` with those flags. Then:
+
+- **Inline comments** (the reviewer's verified defects) are fixed now: AO sends them to the worker.
+- **Optional suggestions** in the review summary go into one `Follow-ups from PR #N` issue per PR, labeled `review-followup`, instead of being fixed in the PR.
+- A round with no inline comments ends review for that step. If the last round still finds defects, one more round runs; if that one does too, the orchestrator asks you.
+
+Workers state their agent, model and effort at the top of the PR description. On deep steps they run a local review (such as `/code-review`) before opening the PR, and they leave PR review to the orchestrator.
 
 ## Install
 
@@ -41,7 +52,9 @@ cp -R ao-skills/skills/ao-plan ~/.agents/skills/
    Implement docs/plans/<file>.md, following its "How to run this plan" section.
    ```
 
-The repo must already be an AO project (`ao project add --path <repo>`).
+The repo must already be an AO project (`ao project add --path <repo>`), with automatic review (`autoReview`) turned off in its project settings so AO does not start its own reviews alongside the plan's rounds.
+
+Works alongside superpowers: if `writing-plans` is shaping the plan, it writes the steps and `ao-plan` adds the AO sections to the same file.
 
 ## Tiers
 
@@ -68,7 +81,8 @@ Then tell the project's orchestrator: `Implement docs/plans/2026-11-20-tasklist-
 
 ## Limits
 
-The plan is instructions, not enforcement: AO does not validate `Worker:` lines, so an orchestrator that skips one starts that worker on the project's default model.
+- The plan is instructions, not enforcement: AO does not validate `Worker:` or `Review:` lines, so an orchestrator that skips one falls back to project defaults.
+- AO's reviewer decides what is an inline defect and what is an optional suggestion. A minor real defect it posts inline gets fixed in the PR rather than deferred.
 
 ## License
 
