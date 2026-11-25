@@ -104,6 +104,20 @@ Tiers can use any agent `ao spawn --agent` supports. To change them, add an `## 
 
 Details: [skills/ao-plan/references/tiers.md](skills/ao-plan/references/tiers.md).
 
+### Tasks without a plan (optional)
+
+Plans carry their own instructions, so the orchestrator needs no extra rules to run them. Tasks you give it directly ("fix the login bug") use the project's default worker model. To tier those too, and as a fallback if an orchestrator ever skips a plan's header, add an orchestrator rule to the project. It lives in the project's Orchestrator.inc settings, so nothing is committed to the repo:
+
+```bash
+ao project set-config <project-id> --orchestrator-rules 'When a task does not come from a plan in docs/plans/, choose a worker tier before spawning:
+light = --agent claude-code --model claude-sonnet-5-5 --effort medium (docs, config, one-file changes);
+standard = --agent claude-code --model claude-opus-5-5 --effort medium (normal features and fixes);
+deep = --agent claude-code --model claude-opus-5-5 --effort high (concurrency, data loss, migrations, security, unclear bugs).
+If unsure, use standard.'
+```
+
+Restart the project's orchestrator after setting it. Use the same flags as your tier table.
+
 ## Review rounds
 
 For each round in a step's `Review:` line, the orchestrator posts the reviewer's agent, model and effort as a PR comment, then runs `ao review trigger` with that tier's flags.
